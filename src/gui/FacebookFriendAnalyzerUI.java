@@ -1,12 +1,15 @@
 package gui;
 
+import gui.managers.FriendManager;
+import util.FriendCategory;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,37 +18,24 @@ import java.io.IOException;
  *
  * Created by Ian Ludden on 1/20/17.
  */
-public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener {
+public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener,
+        ItemListener {
+    private FacebookFriendAnalyzer analyzer;
     private JPanel chartPanel;
     private JPanel configPanel;
 
-    public FacebookFriendAnalyzerUI() {
+    public FacebookFriendAnalyzerUI(FacebookFriendAnalyzer analyzer) {
+        this.analyzer = analyzer;
+
         try {
             this.setIconImage(ImageIO.read(new File("img/MainLogo.png")));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        // TODO: Make the control/settings/config panel its own class?
-        this.configPanel = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(this.configPanel, BoxLayout.X_AXIS);
-        this.configPanel.setLayout(boxLayout);
-
-        Border lineBorder = BorderFactory
-                .createLineBorder(Color.BLACK, 2, true);
-        TitledBorder configBorder = BorderFactory
-                .createTitledBorder(lineBorder, "Configuration Options");
-
-        this.configPanel.setBorder(configBorder);
-
-        // TODO: Make a file chooser (text field with browse button)
-        // TODO: Make a combo box to choose which category of friends to view (only enabled if file has been loaded)
-        // TODO: Make a "Display Chart" button
-        // TODO (future): Have a slider for customizing the width of the histogram bins
-        // TODO (future): Allow for multiple files to be loaded
-        // TODO (future): Add other random settings that come to mind
-
+        this.configPanel = new ConfigurationPanel(this);
         this.chartPanel = new JPanel(new BorderLayout());
+
 
         // TODO: Put panels in scroll panes first?
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -69,6 +59,25 @@ public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO
+        if (e.getActionCommand().equals("CHOOSE_FILE")) {
+            JFileChooser fileChooser = new JFileChooser();
+            int returnVal = fileChooser.showOpenDialog(null);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File friendsFile = fileChooser.getSelectedFile();
+                analyzer.setFriendManager(new FriendManager(friendsFile));
+            }
+        } else if (e.getActionCommand().equals("BUILD_CHART")) {
+            // TODO
+        } else {
+            // Do nothing
+        }
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            this.analyzer.setFriendCategory((FriendCategory)(e.getItem()));
+        }
     }
 }

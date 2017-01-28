@@ -1,8 +1,10 @@
-import gui.FacebookFriendAnalyzerUI;
+package gui;
+
 import gui.managers.FriendManager;
+import org.jfree.data.time.TimeSeriesCollection;
+import util.FriendCategory;
 
 import javax.swing.*;
-import java.io.File;
 
 /**
  * This class controls the Facebook friend analyzer tool.
@@ -12,6 +14,8 @@ import java.io.File;
 public class FacebookFriendAnalyzer {
     private static FacebookFriendAnalyzer instance = null;
     private FacebookFriendAnalyzerUI analyzerUI;
+    private FriendCategory friendCategory;
+
     private FriendManager friendManager;
 
     private FacebookFriendAnalyzer() {
@@ -40,17 +44,27 @@ public class FacebookFriendAnalyzer {
 
         // TODO: Build the whole thing.
         FacebookFriendAnalyzer analyzer = FacebookFriendAnalyzer.getInstance();
-        analyzer.analyzerUI = new FacebookFriendAnalyzerUI();
+        analyzer.analyzerUI = new FacebookFriendAnalyzerUI(analyzer);
 
-        // TODO: Move to main GUI (when it exists).
-        JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
 
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File friendsFile = chooser.getSelectedFile();
-            analyzer.friendManager = new FriendManager(friendsFile);
-        }
 
         // TODO: Display the results in some pretty format.
+    }
+
+    public void setFriendManager(FriendManager friendManager) {
+        this.friendManager = friendManager;
+    }
+
+    public FriendManager getFriendManager() {
+        return friendManager;
+    }
+
+    public void setFriendCategory(FriendCategory newCategory) {
+        this.friendCategory = newCategory;
+    }
+
+    public TimeSeriesCollection getTimeSeriesCollection() {
+        // TODO: Add parameter for bin width (?)
+        return null;
     }
 }
