@@ -1,1 +1,1 @@
-#facebook-friend-analyzer
+# fb-friend-analysis
