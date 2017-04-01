@@ -28,7 +28,7 @@ public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener,
         this.analyzer = analyzer;
 
         try {
-            this.setIconImage(ImageIO.read(new File("img/MainLogo.png")));
+            this.setIconImage(ImageIO.read(new File("images/MainLogo.png")));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
