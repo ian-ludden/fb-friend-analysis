@@ -22,7 +22,7 @@ public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener,
         ItemListener {
     private FacebookFriendAnalyzer analyzer;
     private JPanel chartPanel;
-    private JPanel configPanel;
+    private ConfigurationPanel configPanel;
 
     public FacebookFriendAnalyzerUI(FacebookFriendAnalyzer analyzer) {
         this.analyzer = analyzer;
@@ -63,9 +63,12 @@ public class FacebookFriendAnalyzerUI extends JFrame implements ActionListener,
             JFileChooser fileChooser = new JFileChooser();
             int returnVal = fileChooser.showOpenDialog(null);
 
+            System.out.println(returnVal);
+
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File friendsFile = fileChooser.getSelectedFile();
                 analyzer.setFriendManager(new FriendManager(friendsFile));
+                this.configPanel.setFilePathText(friendsFile.getAbsolutePath());
             }
         } else if (e.getActionCommand().equals("BUILD_CHART")) {
             // TODO
