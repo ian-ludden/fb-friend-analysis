@@ -12,6 +12,7 @@ import java.awt.*;
  * Created by Ian Ludden on 1/28/17.
  */
 public class ConfigurationPanel extends JPanel {
+    JTextField filePath;
 
     public ConfigurationPanel(FacebookFriendAnalyzerUI friendAnalyzerUI) {
         super();
@@ -22,7 +23,7 @@ public class ConfigurationPanel extends JPanel {
                 .createTitledBorder(lineBorder, "Configuration Options");
         this.setBorder(configBorder);
 
-        JTextField filePath = new JTextField(30);
+        filePath = new JTextField(30);
         JButton browseButton = new JButton("Browse...");
         browseButton.setActionCommand("CHOOSE_FILE");
         browseButton.addActionListener(friendAnalyzerUI);
@@ -44,5 +45,9 @@ public class ConfigurationPanel extends JPanel {
         // TODO (future): Have a slider for customizing the width of the histogram bins
         // TODO (future): Allow for multiple files to be loaded
         // TODO (future): Add other random settings that come to mind
+    }
+
+    void setFilePathText(String newFilePathText) {
+        this.filePath.setText(newFilePathText);
     }
 }
