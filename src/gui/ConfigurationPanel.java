@@ -12,6 +12,8 @@ import java.awt.*;
  * Created by Ian Ludden on 1/28/17.
  */
 public class ConfigurationPanel extends JPanel {
+    public static final String CHOOSE_FILE_COMMAND = "CHOOSE_FILE";
+    public static final String BUILD_CHART_COMMAND = "BUILD_CHART";
     JTextField filePath;
 
     public ConfigurationPanel(FacebookFriendAnalyzerUI friendAnalyzerUI) {
@@ -25,7 +27,7 @@ public class ConfigurationPanel extends JPanel {
 
         filePath = new JTextField(30);
         JButton browseButton = new JButton("Browse...");
-        browseButton.setActionCommand("CHOOSE_FILE");
+        browseButton.setActionCommand(CHOOSE_FILE_COMMAND);
         browseButton.addActionListener(friendAnalyzerUI);
 
         this.add(filePath);
@@ -38,7 +40,7 @@ public class ConfigurationPanel extends JPanel {
         this.add(categoryComboBox);
 
         JButton displayChartButton = new JButton("Build Chart");
-        displayChartButton.setActionCommand("BUILD_CHART");
+        displayChartButton.setActionCommand(BUILD_CHART_COMMAND);
         displayChartButton.addActionListener(friendAnalyzerUI);
         this.add(displayChartButton);
 
